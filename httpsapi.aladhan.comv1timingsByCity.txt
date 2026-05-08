@@ -1,0 +1,1 @@
+https://api.aladhan.com/v1/timingsByCity/19-02-2025?city=Amman&country=Jordan
