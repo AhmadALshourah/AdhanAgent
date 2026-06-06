@@ -1,0 +1,28 @@
+{
+  "name": "وكيل الأذان — مواقيت الصلاة",
+  "short_name": "وكيل الأذان",
+  "description": "مواقيت الصلاة والقبلة بين يديك",
+  "start_url": "/ar",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#061411",
+  "theme_color": "#0d7a6e",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "categories": ["lifestyle", "utilities"]
+}

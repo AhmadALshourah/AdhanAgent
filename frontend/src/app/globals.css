@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light — "mihrab daylight": soft mint, deep teal, gold accent */
+  --background: #f5faf8;
+  --background-2: #e9f4f0;
+  --foreground: #0a1f1b;
+  --card: #ffffff;
+  --muted: #5c726d;
+  --border: #d9e8e3;
+  --primary: #0d7a6e;
+  --primary-foreground: #ffffff;
+  --accent: #c1992f;
+  --ring: #0d7a6e;
+  --shadow: 0 1px 2px rgba(10, 31, 27, 0.04), 0 8px 24px rgba(10, 31, 27, 0.06);
+}
+
+.dark {
+  /* Dark — "masjid at night": deep emerald-black, bright teal, warm gold */
+  --background: #061411;
+  --background-2: #0a201a;
+  --foreground: #e7f1ee;
+  --card: #0f2620;
+  --muted: #87a39c;
+  --border: #1c3b33;
+  --primary: #2dd4bf;
+  --primary-foreground: #04201c;
+  --accent: #e0b659;
+  --ring: #2dd4bf;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-arabic), var(--font-sans), system-ui, sans-serif;
+    /* Subtle Islamic geometric star pattern + ambient glow */
+    background-image:
+      radial-gradient(
+        1200px 600px at 50% -10%,
+        color-mix(in srgb, var(--primary) 14%, transparent),
+        transparent 60%
+      ),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%230d7a6e' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M30 4l7 12 13 2-9 10 2 13-13-6-13 6 2-13-9-10 13-2z'/%3E%3C/g%3E%3C/svg%3E");
+    background-attachment: fixed;
+  }
+
+  * {
+    border-color: var(--border);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .card-surface {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+}
+
+/* Skeleton shimmer */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: color-mix(in srgb, var(--muted) 18%, transparent);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--muted) 12%, transparent),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+[dir="rtl"] .skeleton::after {
+  animation-direction: reverse;
+}

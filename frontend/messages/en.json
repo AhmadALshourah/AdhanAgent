@@ -1,0 +1,83 @@
+{
+  "app": {
+    "title": "AdhanAgent",
+    "tagline": "Prayer times & Qibla at your fingertips"
+  },
+  "nav": {
+    "home": "Today",
+    "monthly": "Monthly",
+    "qibla": "Qibla",
+    "chat": "Assistant"
+  },
+  "prayers": {
+    "Fajr": "Fajr",
+    "Sunrise": "Sunrise",
+    "Dhuhr": "Dhuhr",
+    "Asr": "Asr",
+    "Sunset": "Sunset",
+    "Maghrib": "Maghrib",
+    "Isha": "Isha",
+    "Imsak": "Imsak",
+    "Midnight": "Midnight"
+  },
+  "home": {
+    "nextPrayer": "Next prayer",
+    "remaining": "Remaining",
+    "todayTimings": "Today's timings",
+    "hours": "hr",
+    "minutes": "min",
+    "seconds": "sec"
+  },
+  "location": {
+    "detect": "Detect my location",
+    "search": "Search for a city",
+    "cityPlaceholder": "City",
+    "countryPlaceholder": "Country",
+    "go": "Show",
+    "detecting": "Detecting...",
+    "denied": "Could not access location"
+  },
+  "monthly": {
+    "title": "Monthly timings",
+    "date": "Date",
+    "hijri": "Hijri",
+    "noData": "No data available"
+  },
+  "qibla": {
+    "title": "Qibla direction",
+    "direction": "Direction",
+    "instruction": "Point your device toward the arrow to find the Qibla",
+    "cardinals": {
+      "N": "N",
+      "S": "S",
+      "E": "E",
+      "W": "W"
+    }
+  },
+  "chat": {
+    "title": "AI Assistant",
+    "placeholder": "Ask about prayer times...",
+    "send": "Send",
+    "thinking": "Thinking...",
+    "welcome": "Hello! Ask me about prayer times in any city."
+  },
+  "notifications": {
+    "enablePrompt": "Enable notifications to be alerted at every prayer time",
+    "enable": "Enable",
+    "installPrompt": "Install the app on your device for quick access",
+    "install": "Install",
+    "soundOn": "Sound on",
+    "soundOff": "Sound off",
+    "muteSound": "Mute sound",
+    "enableSound": "Enable sound",
+    "prayerTime": "Time for {prayer}",
+    "offlineData": "Cached data (you're offline)"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong, try again",
+    "theme": "Theme",
+    "language": "Language",
+    "today": "Today"
+  }
+}

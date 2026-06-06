@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0d7a6e"/>
+  <!-- Crescent moon -->
+  <path d="M290 120 A136 136 0 1 0 290 392 A104 104 0 1 1 290 120Z" fill="#2dd4bf"/>
+  <!-- Stars -->
+  <circle cx="360" cy="160" r="18" fill="#e0b659"/>
+  <circle cx="390" cy="200" r="11" fill="#e0b659"/>
+  <circle cx="380" cy="138" r="8"  fill="#e0b659"/>
+</svg>
