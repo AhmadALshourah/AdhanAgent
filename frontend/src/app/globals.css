@@ -37,7 +37,7 @@
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-arabic), var(--font-sans), system-ui, sans-serif;
-    /* Subtle Islamic geometric star pattern + ambient glow */
+    /* Light mode: subtle Islamic geometric star pattern + ambient glow */
     background-image:
       radial-gradient(
         1200px 600px at 50% -10%,
@@ -46,6 +46,17 @@
       ),
       url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%230d7a6e' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M30 4l7 12 13 2-9 10 2 13-13-6-13 6 2-13-9-10 13-2z'/%3E%3C/g%3E%3C/svg%3E");
     background-attachment: fixed;
+  }
+
+  /* Dark mode: same pattern with dark-mode primary colour (#2dd4bf) */
+  .dark body {
+    background-image:
+      radial-gradient(
+        1200px 600px at 50% -10%,
+        color-mix(in srgb, var(--primary) 10%, transparent),
+        transparent 60%
+      ),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%232dd4bf' stroke-opacity='0.04' stroke-width='1'%3E%3Cpath d='M30 4l7 12 13 2-9 10 2 13-13-6-13 6 2-13-9-10 13-2z'/%3E%3C/g%3E%3C/svg%3E");
   }
 
   * {

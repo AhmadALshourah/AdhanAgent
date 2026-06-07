@@ -12,6 +12,8 @@ const ICONS: Record<string, string> = {
   Asr: "🌤️",
   Maghrib: "🌇",
   Isha: "🌙",
+  Imsak: "🌙",
+  Midnight: "🌌",
 };
 
 export function PrayerTimeCard({

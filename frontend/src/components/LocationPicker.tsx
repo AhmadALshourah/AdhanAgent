@@ -69,7 +69,10 @@ export function LocationPicker({
         {geo.loading ? t("detecting") : t("detect")}
       </button>
 
-      {geo.error && <p className="text-xs text-red-500">{t("denied")}</p>}
+      {/* Show specific error message based on geo error type */}
+      {geo.error && (
+        <p className="text-xs text-red-500">{t(geo.error)}</p>
+      )}
     </div>
   );
 }

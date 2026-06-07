@@ -1,5 +1,6 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Query
 
+from app.core.errors import handle_upstream_error
 from app.schemas.timings import TimingsResponse
 from app.services import aladhan_client
 
@@ -15,7 +16,7 @@ async def get_timings(
         data = await aladhan_client.get_timings(city, country)
         return TimingsResponse(**data)
     except Exception as e:
-        raise HTTPException(status_code=502, detail=str(e)) from e
+        raise handle_upstream_error(e) from e
 
 
 @router.get("/timings/coords", response_model=TimingsResponse)
@@ -27,4 +28,4 @@ async def get_timings_by_coords(
         data = await aladhan_client.get_timings_by_coords(lat, lng)
         return TimingsResponse(**data)
     except Exception as e:
-        raise HTTPException(status_code=502, detail=str(e)) from e
+        raise handle_upstream_error(e) from e

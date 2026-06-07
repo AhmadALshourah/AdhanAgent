@@ -40,8 +40,12 @@ export function NextPrayerCountdown({ timings }: { timings: PrayerTimings }) {
       transition={{ duration: 0.4 }}
       className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-primary/20 via-card to-card p-6 text-center shadow-soft"
     >
-      {/* Ambient glow */}
-      <div className="pointer-events-none absolute -top-16 start-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-primary/30 blur-3xl" />
+      {/*
+        Ambient glow: use physical left-1/2 + -translate-x-1/2 so the
+        centering is correct in both LTR and RTL (it's a visual element,
+        not a textual one, so logical properties would break RTL centering).
+      */}
+      <div className="pointer-events-none absolute -top-16 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-primary/30 blur-3xl" />
 
       <div className="relative">
         <p className="text-sm text-muted">{t("home.nextPrayer")}</p>

@@ -20,10 +20,11 @@ export function LanguageSwitcher() {
     <button
       onClick={() => switchTo(locale === "ar" ? "en" : "ar")}
       aria-label="Switch language"
-      className="flex h-9 items-center gap-1 rounded-lg border border-border px-2.5 text-sm transition hover:bg-background-2"
+      className="flex h-9 items-center gap-1 rounded-lg border border-border px-2.5 text-sm font-semibold transition hover:bg-background-2"
     >
       <Languages size={18} />
-      <span className="font-semibold">{locale === "ar" ? "EN" : "ع"}</span>
+      {/* Always show the NEXT locale label for clarity */}
+      <span>{locale === "ar" ? "EN" : "AR"}</span>
     </button>
   );
 }

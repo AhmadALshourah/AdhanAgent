@@ -1,7 +1,8 @@
 from datetime import date
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Query
 
+from app.core.errors import handle_upstream_error
 from app.services import aladhan_client
 
 router = APIRouter()
@@ -20,4 +21,4 @@ async def get_calendar(
     try:
         return await aladhan_client.get_calendar(city, country, month, year)
     except Exception as e:
-        raise HTTPException(status_code=502, detail=str(e)) from e
+        raise handle_upstream_error(e) from e

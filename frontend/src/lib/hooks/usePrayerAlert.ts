@@ -9,7 +9,6 @@ interface Options {
   timings: PrayerTimings | undefined;
   soundEnabled: boolean;
   notify: (title: string, body?: string) => void;
-  prayerLabel: (name: string) => string;
   notifLabel: (name: string) => string; // e.g. "حان وقت الفجر"
 }
 
@@ -21,7 +20,6 @@ export function usePrayerAlert({
   timings,
   soundEnabled,
   notify,
-  prayerLabel,
   notifLabel,
 }: Options) {
   // Track which prayer-time key we already fired to avoid repeats.
@@ -44,7 +42,7 @@ export function usePrayerAlert({
           if (soundEnabled) playAdhanBell();
         }
       }
-    }, 500);
+    }, 1000);
 
     return () => clearInterval(id);
   }, [timings, soundEnabled, notify, notifLabel]);

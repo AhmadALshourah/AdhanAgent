@@ -1,12 +1,18 @@
-/* AdhanAgent Service Worker — v1 */
-const CACHE = 'adhan-v1';
+/* AdhanAgent Service Worker — v2 */
+const CACHE = 'adhan-v2';
 
 // Cache next.js static chunks (cache-first)
 const STATIC_PREFIXES = ['/_next/static/', '/icons/', '/manifest.webmanifest'];
 // Cache API responses (network-first, fallback to cache)
 const API_PREFIX = '/api/v1/';
 
-self.addEventListener('install', () => self.skipWaiting());
+// Pre-cache the offline fallback page on install
+self.addEventListener('install', (e) => {
+  e.waitUntil(
+    caches.open(CACHE).then((c) => c.add('/offline.html'))
+  );
+  self.skipWaiting();
+});
 
 self.addEventListener('activate', (e) => {
   e.waitUntil(
@@ -54,10 +60,15 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // Navigation (HTML pages): network-first, serve cached if offline
+  // Navigation (HTML pages): network-first, serve cached if available,
+  // otherwise serve the offline fallback page.
   if (request.mode === 'navigate') {
     e.respondWith(
-      fetch(request).catch(() => caches.match(request) || fetch(request))
+      fetch(request).catch(() =>
+        caches.match(request).then(
+          (cached) => cached || caches.match('/offline.html')
+        )
+      )
     );
   }
 });

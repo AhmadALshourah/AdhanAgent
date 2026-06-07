@@ -23,11 +23,15 @@ export function QiblaCompass({ direction }: { direction: number }) {
         {/* Decorative inner ring */}
         <div className="absolute inset-3 rounded-full border border-dashed border-primary/30" />
 
-        {/* Cardinal marks — translated */}
+        {/*
+          Cardinal marks use PHYSICAL (directional) positioning, not logical,
+          because a compass is a visual element that must not flip in RTL.
+          N=top, S=bottom, W=left, E=right — always.
+        */}
         <span className="absolute top-3 text-xs font-bold text-muted">{C("N")}</span>
         <span className="absolute bottom-3 text-xs font-bold text-muted">{C("S")}</span>
-        <span className="absolute start-3 text-xs font-bold text-muted">{C("W")}</span>
-        <span className="absolute end-3 text-xs font-bold text-muted">{C("E")}</span>
+        <span className="absolute left-3 text-xs font-bold text-muted">{C("W")}</span>
+        <span className="absolute right-3 text-xs font-bold text-muted">{C("E")}</span>
 
         {/* Qibla needle — always rotates in visual (LTR) space */}
         <motion.div

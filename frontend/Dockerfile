@@ -1,7 +1,13 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm install
+RUN npm ci
+
+# Receive NEXT_PUBLIC_BACKEND_URL at build time so Next.js can bake it in.
+# Default points to the Docker service name so containers can reach each other.
+ARG NEXT_PUBLIC_BACKEND_URL=http://backend:8000
+ENV NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
+
 COPY . .
 RUN npm run build
 

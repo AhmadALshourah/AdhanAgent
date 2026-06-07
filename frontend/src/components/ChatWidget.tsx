@@ -5,6 +5,8 @@ import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import { api } from "@/lib/api";
 
+const MAX_LENGTH = 500;
+
 interface Message {
   role: "user" | "assistant";
   content: string;
@@ -32,9 +34,10 @@ export function ChatWidget() {
       const res = await api.chat(text);
       setMessages((m) => [...m, { role: "assistant", content: res.reply }]);
     } catch {
+      // Show a proper error message instead of the welcome message
       setMessages((m) => [
         ...m,
-        { role: "assistant", content: t("welcome") },
+        { role: "assistant", content: t("error") },
       ]);
     } finally {
       setLoading(false);
@@ -79,6 +82,7 @@ export function ChatWidget() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={t("placeholder")}
+          maxLength={MAX_LENGTH}
           className="flex-1 rounded-xl border border-border bg-background px-3 py-2 text-sm outline-none transition focus:border-primary"
         />
         <button

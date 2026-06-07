@@ -8,10 +8,20 @@ import {
 } from "@/lib/locale-utils";
 import { MAIN_PRAYERS, type CalendarDay } from "@/lib/types";
 
+/** Parse Aladhan's "DD-MM-YYYY" format and check if it matches today. */
+function isToday(gregorianDate: string): boolean {
+  const [day, month, year] = gregorianDate.split("-").map(Number);
+  const today = new Date();
+  return (
+    day === today.getDate() &&
+    month === today.getMonth() + 1 &&
+    year === today.getFullYear()
+  );
+}
+
 export function MonthlyTable({ days }: { days: CalendarDay[] }) {
   const t = useTranslations();
   const locale = useLocale();
-  const todayNum = new Date().getDate();
 
   return (
     <div className="overflow-x-auto rounded-2xl border border-border shadow-soft">
@@ -33,15 +43,14 @@ export function MonthlyTable({ days }: { days: CalendarDay[] }) {
         </thead>
         <tbody>
           {days.map((day) => {
-            const isToday =
-              Number(day.date.gregorian.day) === todayNum;
             const { hijri, gregorian } = day.date;
+            const today = isToday(gregorian.date);
 
             return (
               <tr
                 key={gregorian.date}
                 className={`border-t border-border transition-colors ${
-                  isToday
+                  today
                     ? "bg-primary/10 font-semibold text-primary"
                     : "hover:bg-background-2"
                 }`}

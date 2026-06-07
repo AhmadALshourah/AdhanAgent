@@ -76,7 +76,6 @@ export default function HomePage() {
     timings: data?.timings,
     soundEnabled,
     notify,
-    prayerLabel: (name) => t(`prayers.${name}`),
     notifLabel: (name) =>
       t("notifications.prayerTime", { prayer: t(`prayers.${name}`) }),
   });

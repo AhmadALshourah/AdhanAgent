@@ -1,5 +1,6 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Query
 
+from app.core.errors import handle_upstream_error
 from app.schemas.timings import QiblaResponse
 from app.services import aladhan_client
 
@@ -15,4 +16,4 @@ async def get_qibla(
         data = await aladhan_client.get_qibla(lat, lng)
         return QiblaResponse(**data)
     except Exception as e:
-        raise HTTPException(status_code=502, detail=str(e)) from e
+        raise handle_upstream_error(e) from e

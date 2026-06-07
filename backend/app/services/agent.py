@@ -1,8 +1,16 @@
+"""LangChain agent for the /chat endpoint.
+
+Uses the ``create_agent`` factory from langchain ≥ 1.3 (LangGraph-backed)
+with a ``ChatOpenAI`` instance so the API key is passed directly — no
+``os.environ`` mutation inside a request handler.
+"""
+
 from datetime import date
 
 import httpx
 from langchain.agents import create_agent
 from langchain_core.tools import tool
+from langchain_openai import ChatOpenAI
 
 from app.settings import settings
 
@@ -24,7 +32,7 @@ def get_prayer_times(city: str, country: str) -> str:
             return (
                 f"Prayer times for {city}, {country} on {today} "
                 f"({hijri['day']} {hijri['month']['en']} {hijri['year']} AH):\n"
-                + "\n".join(f"  {name}: {time}" for name, time in timings.items())
+                + "\n".join(f"  {name}: {t}" for name, t in timings.items())
             )
     except Exception as e:
         return f"Could not fetch prayer times: {e}"
@@ -38,10 +46,15 @@ _SYSTEM_PROMPT = (
 
 
 def _get_agent():
+    """Lazy-init the agent (once per process), passing api_key directly."""
     global _agent
     if _agent is None:
+        llm = ChatOpenAI(
+            model="gpt-4o-mini",
+            api_key=settings.openai_api_key,
+        )
         _agent = create_agent(
-            model="openai:gpt-4o-mini",
+            model=llm,
             tools=[get_prayer_times],
             system_prompt=_SYSTEM_PROMPT,
         )
@@ -49,10 +62,9 @@ def _get_agent():
 
 
 async def chat(message: str) -> str:
+    """Run the agent and return its text reply."""
     if not settings.openai_api_key:
         return "AI assistant is not configured (missing OPENAI_API_KEY)."
-    import os
-    os.environ["OPENAI_API_KEY"] = settings.openai_api_key
     agent = _get_agent()
     result = await agent.ainvoke({"messages": [{"role": "user", "content": message}]})
     messages = result.get("messages", [])

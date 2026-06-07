@@ -8,7 +8,12 @@ export function Providers({ children }: { children: ReactNode }) {
     () =>
       new QueryClient({
         defaultOptions: {
-          queries: { staleTime: 60_000, retry: 1 },
+          queries: {
+            // Prayer times change once a day — 5 min staleTime matches
+            // the backend's CACHE_TTL_SECONDS (300s) to avoid over-fetching.
+            staleTime: 5 * 60 * 1000,
+            retry: 1,
+          },
         },
       })
   );

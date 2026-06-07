@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Bell, BellOff, Volume2, VolumeX, X } from "lucide-react";
+import { Bell, Volume2, VolumeX, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useInstallPrompt } from "@/lib/hooks/useInstallPrompt";
@@ -16,10 +16,13 @@ export function NotificationBanner({ soundEnabled, onToggleSound }: Props) {
   const t = useTranslations("notifications");
   const { permission, requestPermission } = useNotifications();
   const { canInstall, install } = useInstallPrompt();
-  const [dismissed, setDismissed] = useState(false);
 
-  const showNotifBanner = !dismissed && permission === "default";
-  const showInstallBanner = !dismissed && canInstall;
+  // Separate dismiss states so closing one banner doesn't hide the other
+  const [dismissedNotif, setDismissedNotif] = useState(false);
+  const [dismissedInstall, setDismissedInstall] = useState(false);
+
+  const showNotifBanner = !dismissedNotif && permission === "default";
+  const showInstallBanner = !dismissedInstall && canInstall;
 
   return (
     <div className="space-y-2">
@@ -40,7 +43,7 @@ export function NotificationBanner({ soundEnabled, onToggleSound }: Props) {
               {t("enable")}
             </button>
             <button
-              onClick={() => setDismissed(true)}
+              onClick={() => setDismissedNotif(true)}
               aria-label="Dismiss"
               className="text-muted hover:text-foreground"
             >
@@ -67,7 +70,7 @@ export function NotificationBanner({ soundEnabled, onToggleSound }: Props) {
               {t("install")}
             </button>
             <button
-              onClick={() => setDismissed(true)}
+              onClick={() => setDismissedInstall(true)}
               aria-label="Dismiss"
               className="text-muted hover:text-foreground"
             >

@@ -35,7 +35,9 @@
     "countryPlaceholder": "Country",
     "go": "Show",
     "detecting": "Detecting...",
-    "denied": "Could not access location"
+    "denied": "Location access denied — check your browser permissions",
+    "unavailable": "Location unavailable",
+    "timeout": "Location request timed out, please try again"
   },
   "monthly": {
     "title": "Monthly timings",
@@ -59,7 +61,8 @@
     "placeholder": "Ask about prayer times...",
     "send": "Send",
     "thinking": "Thinking...",
-    "welcome": "Hello! Ask me about prayer times in any city."
+    "welcome": "Hello! Ask me about prayer times in any city.",
+    "error": "Something went wrong, please try again"
   },
   "notifications": {
     "enablePrompt": "Enable notifications to be alerted at every prayer time",

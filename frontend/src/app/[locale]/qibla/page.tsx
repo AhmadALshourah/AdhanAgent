@@ -33,9 +33,10 @@ export default function QiblaPage() {
           </div>
         )}
 
+        {/* Geolocation error */}
         {geo.error && (
           <div className="flex flex-col items-center gap-3 text-center">
-            <p className="text-red-500">{t("location.denied")}</p>
+            <p className="text-red-500">{t(`location.${geo.error}`)}</p>
             <button
               onClick={() => geo.detect()}
               className="flex items-center gap-1 rounded-xl border border-primary px-4 py-2 text-sm font-medium text-primary transition hover:bg-primary/10"
@@ -44,6 +45,13 @@ export default function QiblaPage() {
               {t("location.detect")}
             </button>
           </div>
+        )}
+
+        {/* API error (geolocation succeeded but Qibla API failed) */}
+        {query.isError && !geo.error && (
+          <p className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-center text-red-500">
+            {t("common.error")}
+          </p>
         )}
 
         {query.data && (

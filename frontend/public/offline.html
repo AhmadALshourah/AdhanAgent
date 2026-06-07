@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>غير متصل — وكيل الأذان</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100svh;
+      background: #061411;
+      color: #e7f1ee;
+      text-align: center;
+      padding: 2rem;
+      gap: 1rem;
+    }
+    .icon { font-size: 3.5rem; }
+    h1 { font-size: 1.5rem; color: #2dd4bf; }
+    p { color: #87a39c; font-size: 0.9rem; max-width: 22rem; line-height: 1.6; }
+    button {
+      margin-top: 0.5rem;
+      padding: 0.6rem 1.5rem;
+      border-radius: 0.75rem;
+      border: 1px solid #2dd4bf;
+      background: transparent;
+      color: #2dd4bf;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    button:hover { background: rgba(45, 212, 191, 0.1); }
+  </style>
+</head>
+<body>
+  <div class="icon">📡</div>
+  <h1>أنت غير متصل بالإنترنت</h1>
+  <p>تحقق من اتصالك وحاول مجدداً. المواقيت المحفوظة ستظهر تلقائياً عند فتح التطبيق.</p>
+  <p style="direction:ltr;font-size:0.8rem">You're offline — check your connection and try again.</p>
+  <button onclick="location.reload()">إعادة المحاولة / Retry</button>
+</body>
+</html>
