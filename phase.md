@@ -204,7 +204,42 @@ AdhanAgent/
 
 ---
 
-## ✅ 5. Phase 7 — Implementation (التنفيذ — المرحلة الأخيرة)
+## 🛡️ 5. Phase 7.5 — Project Scan & Hardening (ما بعد التنفيذ)
+
+بعد اكتمال كل المراحل، تمّ إجراء **scan شامل** للمشروع وإيجاد **33 مشكلة** (8 حرجة، 14 متوسطة، 11 بسيطة). جميعها تمّ إصلاحها وتوثيقها في [`issues.md`](./issues.md).
+
+### أبرز الإصلاحات
+
+| الفئة | المشكلة | الإصلاح |
+|-------|---------|---------|
+| Backend | LangChain 0.3 vs 1.3.4 API mismatch | اعتماد `create_agent` / `ainvoke` الصحيح لـ 1.3.4 |
+| Backend | `os.environ` mutation في request handler | تمرير `api_key` مباشرةً لـ `ChatOpenAI` |
+| Backend | `/chat` بدون `try/except` | معالجة الأخطاء → 502 Bad Gateway |
+| Backend | أخطاء Aladhan كلها → 502 | `handle_upstream_error()`: 4xx→400, 5xx→502, timeout→504 |
+| Backend | Cache لا يُنظَّف تلقائياً | Background asyncio task + `cleanup()` / `size()` |
+| Backend | `slowapi` مثبَّت وغير مستخدم | حُذف من `requirements.txt` |
+| Backend | `Dockerfile` Python 3.11 | رُفع إلى `3.12-slim` |
+| Frontend | Chat error يعرض رسالة "welcome" | مفتاح `chat.error` في الترجمة |
+| Frontend | QiblaCompass يتعكس في RTL | `left-3`/`right-3` (physical, لا logical) |
+| Frontend | NotificationBanner حالة مشتركة للبانرين | `dismissedNotif` + `dismissedInstall` منفصلتان |
+| Frontend | `useStoredLocation` flash عند التحميل | Lazy `useState` initializer |
+| Frontend | `api.ts` لا timeout | `AbortController` 12s على كل fetch |
+| Frontend | `sw.js` لا offline fallback | `adhan-v2` + pre-cache `offline.html` |
+| Frontend | `isToday` يقارن يوم الشهر فقط | مقارنة يوم + شهر + سنة |
+| Frontend | Geolocation error واحد لكل الأنواع | `GeoErrorKey: "denied"/"unavailable"/"timeout"` |
+| DevOps | Docker frontend يبدأ قبل backend | `healthcheck` + `depends_on: service_healthy` |
+| DevOps | `NEXT_PUBLIC_BACKEND_URL` لا يُبنى في Docker | `ARG`/`ENV` قبل `npm run build` |
+
+### الاختبارات المضافة
+- **22 اختباراً** تغطي الـ fixes الجديدة:
+  - `test_cache.py` — 3 اختبارات لـ `cleanup()` و`size()`
+  - `test_chat.py` — 4 اختبارات جديدة للـ chat endpoint
+  - `test_error_handling.py` — 4 اختبارات لـ B-08 (400/502/504 distinction)
+  - **22/22 passed ✅**
+
+---
+
+## ✅ 6. Phase 7 — Implementation (التنفيذ — المرحلة الأخيرة)
 
 ترتيب التنفيذ الموصى به (كل خطوة تعتمد على ما قبلها):
 
@@ -226,11 +261,7 @@ AdhanAgent/
 - [x] Phase 4 مكتملة ✅
 - [x] Phase 5 مكتملة ✅
 - [x] Phase 6 مكتملة ✅
-- [ ] Phase 2 مكتملة
-- [ ] Phase 3 مكتملة
-- [ ] Phase 4 مكتملة
-- [ ] Phase 5 مكتملة
-- [ ] Phase 6 مكتملة
+- [x] Phase 7.5 — Project Scan & Hardening مكتملة ✅
 - [ ] 🚀 المشروع منشور وجاهز للعرض في الـ CV
 
 ---

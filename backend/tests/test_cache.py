@@ -33,3 +33,29 @@ def test_different_types():
     assert cache.get("str_key") == "hello"
     assert cache.get("list_key") == [1, 2, 3]
     assert cache.get("dict_key") == {"a": 1}
+
+
+def test_cleanup_removes_expired_entries():
+    """cleanup() should delete expired entries and return their count."""
+    cache.set("_cleanup_test_1_", "x", ttl=0)
+    cache.set("_cleanup_test_2_", "y", ttl=0)
+    time.sleep(0.02)  # let both entries expire
+    removed = cache.cleanup()
+    assert removed >= 2
+    assert cache.get("_cleanup_test_1_") is None
+    assert cache.get("_cleanup_test_2_") is None
+
+
+def test_cleanup_keeps_live_entries():
+    """cleanup() must not remove entries that haven't expired yet."""
+    cache.set("_live_entry_", "alive", ttl=300)
+    cache.cleanup()
+    assert cache.get("_live_entry_") == "alive"
+
+
+def test_size_returns_nonnegative_int():
+    """size() returns the current number of stored entries (including expired)."""
+    cache.set("_size_test_", 1, ttl=60)
+    s = cache.size()
+    assert isinstance(s, int)
+    assert s >= 1
