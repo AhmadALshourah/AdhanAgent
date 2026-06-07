@@ -20,8 +20,12 @@ export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  // Use exact match for "/", and for other routes check exact OR nested
+  // ("/chat" should NOT activate for a hypothetical "/chatbot" route).
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+    href === "/"
+      ? pathname === "/"
+      : pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-card/70 backdrop-blur-xl">
