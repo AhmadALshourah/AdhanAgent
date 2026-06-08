@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cairo, Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { routing } from "@/i18n/routing";
@@ -58,20 +59,31 @@ export default async function LocaleLayout({
   const messages = await getMessages();
   const dir = locale === "ar" ? "rtl" : "ltr";
 
+  // Read the theme cookie the client sets (via ThemeToggle or the anti-flash
+  // script).  This lets the server include `dark` in the initial className so
+  // React's RSC reconciliation never strips it during locale navigation.
+  const cookieStore = await cookies();
+  const isDark = cookieStore.get("theme")?.value === "dark";
+
   return (
     <html
       lang={locale}
       dir={dir}
-      className={`${cairo.variable} ${inter.variable}`}
+      className={`${cairo.variable} ${inter.variable}${isDark ? " dark" : ""}`}
       suppressHydrationWarning
     >
       <head>
         <link rel="apple-touch-icon" href="/icons/icon.svg" />
       </head>
       <body className="min-h-screen antialiased">
+        {/*
+          Anti-flash script: runs before React hydration to apply the saved
+          theme.  Also writes the `theme` cookie so the server component above
+          reads the correct value on every RSC navigation (locale switch).
+        */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{if(localStorage.theme==='dark'||(!('theme' in localStorage)&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}`,
+            __html: `try{var t=localStorage.theme||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');document.cookie='theme='+t+';path=/;max-age=31536000;SameSite=Lax';}catch(e){}`,
           }}
         />
         <NextIntlClientProvider messages={messages}>

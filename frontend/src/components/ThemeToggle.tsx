@@ -1,20 +1,24 @@
 "use client";
 
 import { Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function ThemeToggle() {
-  const [dark, setDark] = useState(false);
-
-  useEffect(() => {
-    setDark(document.documentElement.classList.contains("dark"));
-  }, []);
+  // Lazy initializer: reads the actual DOM class on every mount (including
+  // after a locale-switch remount). Never starts as the wrong value.
+  const [dark, setDark] = useState(
+    () => typeof window !== "undefined" && document.documentElement.classList.contains("dark"),
+  );
 
   function toggle() {
     const next = !dark;
     setDark(next);
     document.documentElement.classList.toggle("dark", next);
-    localStorage.theme = next ? "dark" : "light";
+    const value = next ? "dark" : "light";
+    localStorage.theme = value;
+    // Mirror to cookie so the server-side layout reads the correct theme
+    // during RSC navigation (locale switch) and includes `dark` in className.
+    document.cookie = `theme=${value};path=/;max-age=31536000;SameSite=Lax`;
   }
 
   return (
