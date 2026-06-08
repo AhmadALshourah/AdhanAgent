@@ -36,8 +36,9 @@ cp frontend/.env.example frontend/.env.local
 ```bash
 cd backend
 
-# إنشاء البيئة الافتراضية (مرة واحدة فقط)
-python -m venv .venv
+# إنشاء البيئة الافتراضية بـ Python 3.12 صراحةً (مرة واحدة فقط)
+# ⚠️ استخدم py -3.12 وليس python — pydantic-core لا يملك wheel لـ Python 3.14+
+py -3.12 -m venv .venv
 
 # تفعيل البيئة
 # Windows:
