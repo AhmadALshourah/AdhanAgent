@@ -31,6 +31,8 @@
   "location": {
     "detect": "Detect my location",
     "search": "Search for a city",
+    "selectCountry": "Select country…",
+    "selectCity": "Select city…",
     "cityPlaceholder": "City",
     "countryPlaceholder": "Country",
     "go": "Show",

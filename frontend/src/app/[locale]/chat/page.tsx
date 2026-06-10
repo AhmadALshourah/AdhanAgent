@@ -1,8 +1,18 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
-import { ChatWidget } from "@/components/ChatWidget";
 import { MotionPage } from "@/components/ui/MotionPage";
+
+const ChatWidget = dynamic(
+  () => import("@/components/ChatWidget").then((m) => ({ default: m.ChatWidget })),
+  {
+    loading: () => (
+      <div className="h-[70vh] animate-pulse rounded-2xl border border-border bg-card" />
+    ),
+    ssr: false,
+  }
+);
 
 export default function ChatPage() {
   const t = useTranslations();

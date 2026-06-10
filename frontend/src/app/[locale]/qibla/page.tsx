@@ -1,13 +1,25 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { MapPin } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
-import { QiblaCompass } from "@/components/QiblaCompass";
 import { MotionPage } from "@/components/ui/MotionPage";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useGeolocation } from "@/lib/hooks/useGeolocation";
 import { useQibla } from "@/lib/hooks/usePrayerData";
+
+const QiblaCompass = dynamic(
+  () => import("@/components/QiblaCompass").then((m) => ({ default: m.QiblaCompass })),
+  {
+    loading: () => (
+      <div className="flex justify-center">
+        <Skeleton className="h-72 w-72 rounded-full" />
+      </div>
+    ),
+    ssr: false,
+  }
+);
 
 export default function QiblaPage() {
   const t = useTranslations();
@@ -33,7 +45,6 @@ export default function QiblaPage() {
           </div>
         )}
 
-        {/* Geolocation error */}
         {geo.error && (
           <div className="flex flex-col items-center gap-3 text-center">
             <p className="text-red-500">{t(`location.${geo.error}`)}</p>
@@ -47,7 +58,6 @@ export default function QiblaPage() {
           </div>
         )}
 
-        {/* API error (geolocation succeeded but Qibla API failed) */}
         {query.isError && !geo.error && (
           <p className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-center text-red-500">
             {t("common.error")}

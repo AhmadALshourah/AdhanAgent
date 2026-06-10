@@ -25,7 +25,6 @@ export default function HomePage() {
   const t = useTranslations();
   const { location, setLocation } = useStoredLocation();
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
-  const [soundEnabled, setSoundEnabled] = useState(false);
   const [offline, setOffline] = useState(false);
   const [cachedData, setCachedData] = useState<TimingsResponse | null>(null);
 
@@ -69,12 +68,15 @@ export default function HomePage() {
   }, [cityQuery.isError, location.city, location.country, coords]);
 
   const data = query.data ?? cachedData ?? undefined;
-  const next = data ? getNextPrayer(data.timings) : null;
+  // Compute next prayer client-side only to avoid SSR/client time mismatch
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  const next = mounted && data ? getNextPrayer(data.timings) : null;
 
   // Fire prayer alerts
   usePrayerAlert({
     timings: data?.timings,
-    soundEnabled,
+    soundEnabled: true,
     notify,
     notifLabel: (name) =>
       t("notifications.prayerTime", { prayer: t(`prayers.${name}`) }),
@@ -90,10 +92,7 @@ export default function HomePage() {
           <p className="mt-1 text-sm text-muted">{t("app.tagline")}</p>
         </header>
 
-        <NotificationBanner
-          soundEnabled={soundEnabled}
-          onToggleSound={() => setSoundEnabled((s) => !s)}
-        />
+        <NotificationBanner />
 
         <LocationPicker onChange={handleLocation} />
 

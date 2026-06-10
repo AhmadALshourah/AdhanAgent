@@ -77,6 +77,12 @@
   }
 }
 
+/* Hide Next.js dev-tools indicator button (dev-only, no-op in production) */
+[data-nextjs-dev-tools-button],
+nextjs-portal {
+  display: none !important;
+}
+
 /* Skeleton shimmer */
 @keyframes shimmer {
   100% {

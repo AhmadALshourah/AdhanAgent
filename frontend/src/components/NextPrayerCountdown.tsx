@@ -23,12 +23,16 @@ function Unit({ value, label }: { value: string; label: string }) {
 export function NextPrayerCountdown({ timings }: { timings: PrayerTimings }) {
   const t = useTranslations();
   const locale = useLocale();
-  const [now, setNow] = useState(() => new Date());
+  // null on first SSR render to avoid hydration mismatch (server time ≠ client time)
+  const [now, setNow] = useState<Date | null>(null);
 
   useEffect(() => {
+    setNow(new Date());
     const id = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(id);
   }, []);
+
+  if (!now) return null;
 
   const next = getNextPrayer(timings, now);
   const { hours, minutes, seconds } = countdownTo(next.date, now);

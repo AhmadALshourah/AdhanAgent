@@ -31,6 +31,8 @@
   "location": {
     "detect": "تحديد موقعي",
     "search": "ابحث عن مدينة",
+    "selectCountry": "اختر الدولة…",
+    "selectCity": "اختر المدينة…",
     "cityPlaceholder": "المدينة",
     "countryPlaceholder": "الدولة",
     "go": "عرض",

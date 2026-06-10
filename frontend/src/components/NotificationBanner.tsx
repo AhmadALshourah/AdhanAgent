@@ -1,18 +1,13 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Bell, Volume2, VolumeX, X } from "lucide-react";
+import { Bell, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useInstallPrompt } from "@/lib/hooks/useInstallPrompt";
 import { useNotifications } from "@/lib/hooks/useNotifications";
 
-interface Props {
-  soundEnabled: boolean;
-  onToggleSound: () => void;
-}
-
-export function NotificationBanner({ soundEnabled, onToggleSound }: Props) {
+export function NotificationBanner() {
   const t = useTranslations("notifications");
   const { permission, requestPermission } = useNotifications();
   const { canInstall, install } = useInstallPrompt();
@@ -80,21 +75,6 @@ export function NotificationBanner({ soundEnabled, onToggleSound }: Props) {
         )}
       </AnimatePresence>
 
-      {/* Sound toggle — always visible */}
-      <div className="flex justify-end">
-        <button
-          onClick={onToggleSound}
-          aria-label={soundEnabled ? t("muteSound") : t("enableSound")}
-          title={soundEnabled ? t("muteSound") : t("enableSound")}
-          className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs text-muted transition hover:border-primary hover:text-primary"
-        >
-          {soundEnabled ? (
-            <><Volume2 size={14} /> {t("soundOn")}</>
-          ) : (
-            <><VolumeX size={14} /> {t("soundOff")}</>
-          )}
-        </button>
-      </div>
     </div>
   );
 }
