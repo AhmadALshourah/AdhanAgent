@@ -47,7 +47,6 @@ export default function HomePage() {
   const coordsQuery = useTimingsByCoords(coords?.lat ?? null, coords?.lng ?? null);
   const query = coords ? coordsQuery : cityQuery;
 
-  // Save to offline cache whenever we get fresh data
   useEffect(() => {
     if (cityQuery.data && !coords) {
       saveTimings(location.city, location.country, cityQuery.data);
@@ -56,7 +55,6 @@ export default function HomePage() {
     }
   }, [cityQuery.data, location.city, location.country, coords]);
 
-  // Load from offline cache if query fails
   useEffect(() => {
     if (!coords && cityQuery.isError) {
       const cached = loadTimings(location.city, location.country);
@@ -68,12 +66,10 @@ export default function HomePage() {
   }, [cityQuery.isError, location.city, location.country, coords]);
 
   const data = query.data ?? cachedData ?? undefined;
-  // Compute next prayer client-side only to avoid SSR/client time mismatch
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
   const next = mounted && data ? getNextPrayer(data.timings) : null;
 
-  // Fire prayer alerts
   usePrayerAlert({
     timings: data?.timings,
     soundEnabled: true,

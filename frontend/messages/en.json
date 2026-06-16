@@ -88,5 +88,54 @@
   "notFound": {
     "message": "The page you're looking for doesn't exist",
     "goHome": "Go back home"
+  },
+  "promo": {
+    "hero": {
+      "badge": "Open Source",
+      "subtitle": "Prayer times, Qibla direction, and an AI assistant — all in one place",
+      "cta": "Open the App",
+      "github": "GitHub"
+    },
+    "features": {
+      "title": "Everything You Need",
+      "subtitle": "A complete app built with modern technology",
+      "timings": {
+        "title": "Prayer Times",
+        "desc": "Accurate prayer times for any city worldwide with a live countdown to the next prayer"
+      },
+      "qibla": {
+        "title": "Qibla Direction",
+        "desc": "An interactive compass that precisely locates the Qibla from anywhere in the world"
+      },
+      "ai": {
+        "title": "AI Assistant",
+        "desc": "Ask about prayer times in any city using natural language"
+      },
+      "monthly": {
+        "title": "Monthly Calendar",
+        "desc": "Full monthly prayer schedule with both Hijri and Gregorian dates"
+      },
+      "offline": {
+        "title": "Works Offline",
+        "desc": "Automatically caches prayer times and keeps working when you lose connection"
+      },
+      "pwa": {
+        "title": "Installable App",
+        "desc": "Install it on your phone or desktop as a native app — no app store required"
+      }
+    },
+    "preview": {
+      "title": "Today's Timings",
+      "city": "Riyadh, Saudi Arabia",
+      "next": "Next prayer"
+    },
+    "stack": {
+      "title": "Built with Modern Tech"
+    },
+    "cta": {
+      "title": "Ready to Start?",
+      "subtitle": "Start using AdhanAgent for free, right now",
+      "open": "Open the App"
+    }
   }
 }

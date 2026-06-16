@@ -7,7 +7,6 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { routing } from "@/i18n/routing";
 import { Providers } from "../providers";
-import { Navbar } from "@/components/Navbar";
 import { PwaRegister } from "@/components/PwaRegister";
 import "../globals.css";
 
@@ -91,8 +90,7 @@ export default async function LocaleLayout({
             <Suspense fallback={null}>
               <PwaRegister />
             </Suspense>
-            <Navbar />
-            <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
+            {children}
           </Providers>
         </NextIntlClientProvider>
       </body>
